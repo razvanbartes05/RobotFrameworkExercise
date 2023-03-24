@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.9.7 on win32)" generated="20230324 13:22:12.766" rpa="false" schemaversion="3">
+<suite id="s1" name="Newtest" source="D:\pythonProject\RobotFrameworkExercise\newtest.robot">
+<test id="s1-t1" name="Verify Lifespan of Applications" line="11">
+<kw name="Load Json From File" library="JSONLibrary">
+<var>${json_data}</var>
+<arg>./output.json</arg>
+<doc>Load JSON from file.</doc>
+<msg timestamp="20230324 13:22:12.847" level="INFO">${json_data} = {'applications': [{'app_path': 'com.sec.android.app.camera/.Camera', 'lifespan': '31', 'ts_app_closed': '03-14 17:56:29.534000', 'ts_app_started': '03-14 17:56:07.504000'}, {'app_path': 'com.netflix.m...</msg>
+<status status="PASS" starttime="20230324 13:22:12.847" endtime="20230324 13:22:12.847"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${app_list}</var>
+<arg>${json_data["applications"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230324 13:22:12.848" level="INFO">${app_list} = [{'app_path': 'com.sec.android.app.camera/.Camera', 'lifespan': '31', 'ts_app_closed': '03-14 17:56:29.534000', 'ts_app_started': '03-14 17:56:07.504000'}, {'app_path': 'com.netflix.mediaclient/.ui.la...</msg>
+<status status="PASS" starttime="20230324 13:22:12.847" endtime="20230324 13:22:12.848"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${total_apps}</var>
+<arg>${app_list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20230324 13:22:12.848" level="INFO">Length is 6</msg>
+<msg timestamp="20230324 13:22:12.848" level="INFO">${total_apps} = 6</msg>
+<status status="PASS" starttime="20230324 13:22:12.848" endtime="20230324 13:22:12.848"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${short_lifespan_apps}</var>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20230324 13:22:12.849" level="INFO">${short_lifespan_apps} = []</msg>
+<status status="PASS" starttime="20230324 13:22:12.849" endtime="20230324 13:22:12.849"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${long_lifespan_apps}</var>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20230324 13:22:12.849" level="INFO">${long_lifespan_apps} = []</msg>
+<status status="PASS" starttime="20230324 13:22:12.849" endtime="20230324 13:22:12.849"/>
+</kw>
+<for flavor="IN">
+<var>${app_dict}</var>
+<value>@{app_list}</value>
+<iter>
+<var name="${app_dict}">{'app_path': 'com.sec.android.app.camera/.Camera', 'lifespan': '31', 'ts_app_closed': '03-14 17:56:29.534000', 'ts_app_started': '03-14 17:56:07.504000'}</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${app_dict}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230324 13:22:12.849" endtime="20230324 13:22:12.850"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_name}</var>
+<arg>${app_dict}</arg>
+<arg>app_path</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.850" level="INFO">${app_name} = com.sec.android.app.camera/.Camera</msg>
+<status status="PASS" starttime="20230324 13:22:12.850" endtime="20230324 13:22:12.850"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_data}</var>
+<arg>${app_dict}</arg>
+<arg>lifespan</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.850" level="INFO">${app_data} = 31</msg>
+<status status="PASS" starttime="20230324 13:22:12.850" endtime="20230324 13:22:12.850"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_data} &lt; ${WARNING_TIME}">
+<kw name="Append To List" library="Collections">
+<arg>${short_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230324 13:22:12.850" endtime="20230324 13:22:12.850"/>
+</kw>
+<status status="NOT RUN" starttime="20230324 13:22:12.850" endtime="20230324 13:22:12.850"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${long_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230324 13:22:12.850" endtime="20230324 13:22:12.851"/>
+</kw>
+<status status="PASS" starttime="20230324 13:22:12.850" endtime="20230324 13:22:12.851"/>
+</branch>
+<status status="PASS" starttime="20230324 13:22:12.850" endtime="20230324 13:22:12.851"/>
+</if>
+<status status="PASS" starttime="20230324 13:22:12.849" endtime="20230324 13:22:12.851"/>
+</iter>
+<iter>
+<var name="${app_dict}">{'app_path': 'com.netflix.mediaclient/.ui.launch.UIWebViewActivity', 'lifespan': '31', 'ts_app_closed': '03-14 17:56:30.882000', 'ts_app_started': '03-14 17:56:29.534000'}</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${app_dict}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230324 13:22:12.851" endtime="20230324 13:22:12.851"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_name}</var>
+<arg>${app_dict}</arg>
+<arg>app_path</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.851" level="INFO">${app_name} = com.netflix.mediaclient/.ui.launch.UIWebViewActivity</msg>
+<status status="PASS" starttime="20230324 13:22:12.851" endtime="20230324 13:22:12.851"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_data}</var>
+<arg>${app_dict}</arg>
+<arg>lifespan</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.851" level="INFO">${app_data} = 31</msg>
+<status status="PASS" starttime="20230324 13:22:12.851" endtime="20230324 13:22:12.851"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_data} &lt; ${WARNING_TIME}">
+<kw name="Append To List" library="Collections">
+<arg>${short_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230324 13:22:12.852" endtime="20230324 13:22:12.852"/>
+</kw>
+<status status="NOT RUN" starttime="20230324 13:22:12.851" endtime="20230324 13:22:12.852"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${long_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230324 13:22:12.852" endtime="20230324 13:22:12.852"/>
+</kw>
+<status status="PASS" starttime="20230324 13:22:12.852" endtime="20230324 13:22:12.852"/>
+</branch>
+<status status="PASS" starttime="20230324 13:22:12.851" endtime="20230324 13:22:12.852"/>
+</if>
+<status status="PASS" starttime="20230324 13:22:12.851" endtime="20230324 13:22:12.852"/>
+</iter>
+<iter>
+<var name="${app_dict}">{'app_path': 'com.android.vending/com.google.android.finsky.activities.MainActivity', 'lifespan': '7.010', 'ts_app_closed': '03-14 17:56:40.793000', 'ts_app_started': '03-14 17:56:33.783000'}</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${app_dict}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230324 13:22:12.852" endtime="20230324 13:22:12.852"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_name}</var>
+<arg>${app_dict}</arg>
+<arg>app_path</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.852" level="INFO">${app_name} = com.android.vending/com.google.android.finsky.activities.MainActivity</msg>
+<status status="PASS" starttime="20230324 13:22:12.852" endtime="20230324 13:22:12.852"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_data}</var>
+<arg>${app_dict}</arg>
+<arg>lifespan</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.853" level="INFO">${app_data} = 7.010</msg>
+<status status="PASS" starttime="20230324 13:22:12.852" endtime="20230324 13:22:12.853"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_data} &lt; ${WARNING_TIME}">
+<kw name="Append To List" library="Collections">
+<arg>${short_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230324 13:22:12.853" endtime="20230324 13:22:12.853"/>
+</kw>
+<status status="PASS" starttime="20230324 13:22:12.853" endtime="20230324 13:22:12.853"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${long_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230324 13:22:12.853" endtime="20230324 13:22:12.853"/>
+</kw>
+<status status="NOT RUN" starttime="20230324 13:22:12.853" endtime="20230324 13:22:12.854"/>
+</branch>
+<status status="PASS" starttime="20230324 13:22:12.853" endtime="20230324 13:22:12.854"/>
+</if>
+<status status="PASS" starttime="20230324 13:22:12.852" endtime="20230324 13:22:12.854"/>
+</iter>
+<iter>
+<var name="${app_dict}">{'app_path': 'com.spotify.music/.MainActivity', 'lifespan': '31', 'ts_app_closed': '03-14 17:56:49.245000', 'ts_app_started': '03-14 17:56:40.793000'}</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${app_dict}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230324 13:22:12.854" endtime="20230324 13:22:12.854"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_name}</var>
+<arg>${app_dict}</arg>
+<arg>app_path</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.854" level="INFO">${app_name} = com.spotify.music/.MainActivity</msg>
+<status status="PASS" starttime="20230324 13:22:12.854" endtime="20230324 13:22:12.854"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_data}</var>
+<arg>${app_dict}</arg>
+<arg>lifespan</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.854" level="INFO">${app_data} = 31</msg>
+<status status="PASS" starttime="20230324 13:22:12.854" endtime="20230324 13:22:12.854"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_data} &lt; ${WARNING_TIME}">
+<kw name="Append To List" library="Collections">
+<arg>${short_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230324 13:22:12.854" endtime="20230324 13:22:12.855"/>
+</kw>
+<status status="NOT RUN" starttime="20230324 13:22:12.854" endtime="20230324 13:22:12.855"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${long_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.855"/>
+</kw>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.855"/>
+</branch>
+<status status="PASS" starttime="20230324 13:22:12.854" endtime="20230324 13:22:12.855"/>
+</if>
+<status status="PASS" starttime="20230324 13:22:12.854" endtime="20230324 13:22:12.855"/>
+</iter>
+<iter>
+<var name="${app_dict}">{'app_path': 'com.sec.android.app.popupcalculator/.Calculator', 'lifespan': '0.482', 'ts_app_closed': '03-14 17:57:00.006000', 'ts_app_started': '03-14 17:56:59.524000'}</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${app_dict}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.855"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_name}</var>
+<arg>${app_dict}</arg>
+<arg>app_path</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.855" level="INFO">${app_name} = com.sec.android.app.popupcalculator/.Calculator</msg>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.855"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_data}</var>
+<arg>${app_dict}</arg>
+<arg>lifespan</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.855" level="INFO">${app_data} = 0.482</msg>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.855"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_data} &lt; ${WARNING_TIME}">
+<kw name="Append To List" library="Collections">
+<arg>${short_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.856"/>
+</kw>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.856"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${long_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230324 13:22:12.856" endtime="20230324 13:22:12.856"/>
+</kw>
+<status status="NOT RUN" starttime="20230324 13:22:12.856" endtime="20230324 13:22:12.856"/>
+</branch>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.856"/>
+</if>
+<status status="PASS" starttime="20230324 13:22:12.855" endtime="20230324 13:22:12.856"/>
+</iter>
+<iter>
+<var name="${app_dict}">{'app_path': 'com.sec.android.app.clockpackage/.ClockPackage', 'lifespan': '8.592', 'ts_app_closed': '03-14 17:57:25.200000', 'ts_app_started': '03-14 17:57:16.608000'}</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${app_dict}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230324 13:22:12.856" endtime="20230324 13:22:12.856"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_name}</var>
+<arg>${app_dict}</arg>
+<arg>app_path</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.856" level="INFO">${app_name} = com.sec.android.app.clockpackage/.ClockPackage</msg>
+<status status="PASS" starttime="20230324 13:22:12.856" endtime="20230324 13:22:12.856"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${app_data}</var>
+<arg>${app_dict}</arg>
+<arg>lifespan</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20230324 13:22:12.857" level="INFO">${app_data} = 8.592</msg>
+<status status="PASS" starttime="20230324 13:22:12.856" endtime="20230324 13:22:12.857"/>
+</kw>
+<if>
+<branch type="IF" condition="${app_data} &lt; ${WARNING_TIME}">
+<kw name="Append To List" library="Collections">
+<arg>${short_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230324 13:22:12.857" endtime="20230324 13:22:12.857"/>
+</kw>
+<status status="PASS" starttime="20230324 13:22:12.857" endtime="20230324 13:22:12.857"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${long_lifespan_apps}</arg>
+<arg>${app_name}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230324 13:22:12.857" endtime="20230324 13:22:12.857"/>
+</kw>
+<status status="NOT RUN" starttime="20230324 13:22:12.857" endtime="20230324 13:22:12.857"/>
+</branch>
+<status status="PASS" starttime="20230324 13:22:12.857" endtime="20230324 13:22:12.857"/>
+</if>
+<status status="PASS" starttime="20230324 13:22:12.856" endtime="20230324 13:22:12.857"/>
+</iter>
+<status status="PASS" starttime="20230324 13:22:12.849" endtime="20230324 13:22:12.857"/>
+</for>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${long_lifespan_apps} Apps with a lifespan &gt; 30</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230324 13:22:12.857" endtime="20230324 13:22:12.857"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_short_lifespan_apps}</var>
+<arg>${short_lifespan_apps}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20230324 13:22:12.858" level="INFO">Length is 3</msg>
+<msg timestamp="20230324 13:22:12.858" level="INFO">${num_short_lifespan_apps} = 3</msg>
+<status status="PASS" starttime="20230324 13:22:12.858" endtime="20230324 13:22:12.858"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_long_lifespan_apps}</var>
+<arg>${long_lifespan_apps}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20230324 13:22:12.858" level="INFO">Length is 3</msg>
+<msg timestamp="20230324 13:22:12.858" level="INFO">${num_long_lifespan_apps} = 3</msg>
+<status status="PASS" starttime="20230324 13:22:12.858" endtime="20230324 13:22:12.858"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${num_passed}</var>
+<arg>int(round(${num_short_lifespan_apps} / ${total_apps} * 100)) &gt;= 75</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230324 13:22:12.859" level="INFO">${num_passed} = False</msg>
+<status status="PASS" starttime="20230324 13:22:12.858" endtime="20230324 13:22:12.859"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>${num_passed}</arg>
+<arg>Log To Console</arg>
+<arg>TC PASSED: 75% of applications had a lifespan less than ${WARNING_TIME} seconds.</arg>
+<arg>ELSE</arg>
+<arg>Fail</arg>
+<arg>TC FAILED: less than 75% of applications had a lifespan less than ${WARNING_TIME} seconds.</arg>
+<arg>Warn If</arg>
+<arg>${num_long_lifespan_apps} &gt; 0</arg>
+<arg>${num_long_lifespan_apps}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Fail" library="BuiltIn">
+<arg>TC FAILED: less than 75% of applications had a lifespan less than ${WARNING_TIME} seconds.</arg>
+<arg>Warn If</arg>
+<arg>${num_long_lifespan_apps} &gt; 0</arg>
+<arg>${num_long_lifespan_apps}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<msg timestamp="20230324 13:22:12.859" level="FAIL">AttributeError: 'int' object has no attribute 'startswith'</msg>
+<status status="FAIL" starttime="20230324 13:22:12.859" endtime="20230324 13:22:12.859"/>
+</kw>
+<status status="FAIL" starttime="20230324 13:22:12.859" endtime="20230324 13:22:12.859"/>
+</kw>
+<doc>Verify that 75% of the applications have a lifespan less than 30 seconds</doc>
+<tag>lifespan</tag>
+<status status="FAIL" starttime="20230324 13:22:12.847" endtime="20230324 13:22:12.860">AttributeError: 'int' object has no attribute 'startswith'</status>
+</test>
+<status status="FAIL" starttime="20230324 13:22:12.767" endtime="20230324 13:22:12.860"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">lifespan</stat>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Newtest">Newtest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
